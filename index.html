@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ Builder — ITB Acessórios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+#itb *, #itb *::before, #itb *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+#itb {
+  /* ---- Tokens de marca ITB ---- */
+  --ink:      #17130f;   /* preto quente da marca */
+  --ink2:     #322a23;
+  --graphite: #4a423a;
+  --muted:    #968b7d;
+
+  --cream:    #fbf8f4;   /* fundo geral */
+  --sand:     #f2ebe1;   /* superfícies secundárias */
+  --card:     #ffffff;
+  --line:     #e5dbcc;
+  --line2:    #f0e8dc;
+
+  --gold:     #b08a4e;   /* ouro 18K */
+  --gold-lt:  #d6b77c;
+  --gold-bg:  #f7f0e2;
+
+  --ss: 0 1px 3px rgba(23,19,15,.05);
+  --sm: 0 4px 16px rgba(23,19,15,.07);
+  --sl: 0 14px 44px rgba(23,19,15,.12);
+  --r: 2px; --rs: 2px; --th2: 58px;
+
+  font-family: 'Jost', sans-serif; background: var(--cream); color: var(--ink2);
+  height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+}
+html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-serif; background: #fbf8f4; }
+
+/* TOPBAR */
+#itb .topbar { height: var(--th2); background: var(--ink); display: flex; align-items: center; justify-content: space-between; padding: 0 20px 0 24px; flex-shrink: 0; z-index: 200; border-bottom: 1px solid var(--gold); }
+#itb .brand { display: flex; align-items: baseline; gap: 12px; color: #fff; }
+#itb .brand .mark { font-family: 'Jost', sans-serif; font-weight: 500; font-size: .95rem; letter-spacing: .34em; text-transform: uppercase; color: #fff; }
+#itb .brand .sep { width: 1px; height: 16px; background: rgba(255,255,255,.22); align-self: center; }
+#itb .brand .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--gold-lt); }
+#itb .btn-gold { display: flex; align-items: center; gap: 8px; border-radius: var(--rs); padding: 9px 20px; font-size: .72rem; font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; cursor: pointer; border: 1px solid var(--gold); background: transparent; color: var(--gold-lt); transition: background .25s, color .25s; }
+#itb .btn-gold:hover { background: var(--gold); color: var(--ink); }
+
+/* SHELL */
+#itb .shell { display: flex; flex: 1; overflow: hidden; }
+
+/* CENTER */
+#itb .center { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--cream); }
+#itb .center-top { height: 40px; border-bottom: 1px solid var(--line2); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; background: var(--cream); }
+#itb .eyebrow { font-size: .64rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+#itb .center-body { flex: 1; overflow-y: auto; padding: 40px 24px 56px; }
+#itb .pframe { background: var(--card); border: 1px solid var(--line); box-shadow: var(--sm); max-width: 900px; margin: 0 auto; padding: 48px 52px 52px; }
+
+/* PREVIEW */
+#itb .ps-head { text-align: center; margin-bottom: 34px; }
+#itb .ps-kicker { font-size: .62rem; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+#itb .ps-title { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 2.1rem; line-height: 1.15; color: var(--ink); }
+#itb .ps-rule { width: 34px; height: 1px; background: var(--gold); margin: 16px auto 0; }
+#itb .ps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; align-items: start; }
+#itb .ps-col { display: flex; flex-direction: column; }
+#itb .ps-fi { border-bottom: 1px solid var(--line); }
+#itb .ps-ft { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 17px 2px; cursor: pointer; font-size: .88rem; font-weight: 400; letter-spacing: .01em; color: var(--ink); list-style: none; width: 100%; text-align: left; transition: color .2s; }
+#itb .ps-ft::marker, #itb .ps-ft::-webkit-details-marker { display: none; }
+#itb .ps-ft:hover { color: var(--gold); }
+#itb .ps-fic { flex-shrink: 0; color: var(--gold); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; align-items: center; }
+#itb .ps-fic svg { width: 13px; height: 13px; display: block; }
+#itb details.ps-fi[open] .ps-fic { transform: rotate(45deg); }
+#itb details.ps-fi[open] .ps-ft { color: var(--gold); }
+#itb .ps-fb-inner { padding: 0 2px 20px; font-size: .84rem; line-height: 1.85; color: var(--graphite); }
+#itb .ps-fb-inner ul { padding-left: 1.1em; margin: .4em 0; list-style: none; }
+#itb .ps-fb-inner ul li::before { content: '—'; color: var(--gold); margin-right: .55em; }
+#itb .ps-fb-inner ol { padding-left: 1.4em; margin: .4em 0; }
+#itb .ps-fb-inner li { margin-bottom: .3em; }
+#itb .ps-fb-inner strong { font-weight: 600; color: var(--ink); }
+#itb .ps-fb-inner em { font-style: italic; }
+
+/* RIGHT EDITOR */
+#itb .sb-right { width: 360px; background: var(--card); border-left: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
+#itb .ed-head { height: 40px; border-bottom: 1px solid var(--line2); display: flex; align-items: center; padding: 0 18px; flex-shrink: 0; }
+#itb .ed-body { flex: 1; overflow-y: auto; padding: 20px 18px 28px; }
+
+/* PAINÉIS */
+#itb .ep { margin-bottom: 26px; }
+#itb .ep:last-child { margin-bottom: 0; }
+#itb .eh { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+#itb .eh .lbl { font-size: .63rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+#itb .eh .bar { flex: 1; height: 1px; background: var(--line); }
+#itb .fr { margin-bottom: 12px; }
+#itb .fr:last-child { margin-bottom: 0; }
+#itb label.lb { display: block; font-size: .62rem; font-weight: 400; color: var(--muted); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 6px; }
+#itb input[type=text].inp { width: 100%; background: var(--cream); border: 1px solid var(--line); border-radius: var(--rs); padding: 9px 11px; font-family: 'Jost', sans-serif; font-size: .85rem; color: var(--ink); outline: none; transition: border-color .2s, background .2s; }
+#itb input[type=text].inp:focus { border-color: var(--gold); background: #fff; }
+#itb input[type=text].inp::placeholder { color: #bdb3a6; }
+
+/* RICH TEXT */
+#itb .rte-wrap { border: 1px solid var(--line); border-radius: var(--rs); overflow: hidden; background: #fff; }
+#itb .rte-toolbar { display: flex; flex-wrap: wrap; gap: 2px; padding: 5px 6px; background: var(--sand); border-bottom: 1px solid var(--line); }
+#itb .rte-btn { background: none; border: 1px solid transparent; border-radius: var(--rs); min-width: 26px; height: 26px; padding: 0 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: 'Jost', sans-serif; font-size: .72rem; color: var(--graphite); transition: background .15s, color .15s; }
+#itb .rte-btn:hover { background: var(--gold-bg); color: var(--ink); }
+#itb .rte-sep { width: 1px; background: var(--line); margin: 4px 3px; }
+#itb .rte-area { min-height: 84px; padding: 11px 12px; font-family: 'Jost', sans-serif; font-size: .85rem; line-height: 1.8; color: var(--ink2); outline: none; background: var(--cream); overflow-y: auto; }
+#itb .rte-area:focus { background: #fff; }
+#itb .rte-area p { margin: 0 0 .4em; }
+#itb .rte-area ul { padding-left: 1.3em; margin: .3em 0; }
+#itb .rte-area ol { padding-left: 1.5em; margin: .3em 0; }
+#itb .rte-area li { margin-bottom: .15em; }
+#itb .rte-area:empty::before { content: attr(data-placeholder); color: #bdb3a6; pointer-events: none; }
+
+/* LISTA DE PERGUNTAS */
+#itb .rl { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+#itb .ri { border: 1px solid var(--line); border-radius: var(--rs); overflow: hidden; background: var(--card); }
+#itb .rh { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: var(--sand); border-bottom: 1px solid var(--line); }
+#itb .rnum { font-family: 'Cormorant Garamond', serif; font-size: .95rem; font-weight: 600; color: var(--gold); min-width: 18px; }
+#itb .rlbl { flex: 1; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+#itb .rmove { background: none; border: 1px solid var(--line); border-radius: var(--rs); width: 22px; height: 22px; font-size: .6rem; cursor: pointer; color: var(--graphite); display: flex; align-items: center; justify-content: center; transition: border-color .15s, color .15s; }
+#itb .rmove:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+#itb .rmove:disabled { opacity: .28; cursor: default; }
+#itb .rdel { background: none; border: none; cursor: pointer; color: var(--muted); border-radius: var(--rs); padding: 3px 6px; font-size: .72rem; font-family: 'Jost', sans-serif; transition: background .15s, color .15s; }
+#itb .rdel:hover { background: #fbeeee; color: #a33c3c; }
+#itb .rb { padding: 12px; display: flex; flex-direction: column; gap: 11px; }
+#itb .btn-add-rep { width: 100%; background: var(--ink); border: 1px solid var(--ink); border-radius: var(--rs); padding: 10px; font-family: 'Jost', sans-serif; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: #fff; cursor: pointer; transition: background .2s, color .2s; }
+#itb .btn-add-rep:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+
+/* MODAL EXPORTAR */
+#itb .exp-overlay { position: fixed; inset: 0; background: rgba(23,19,15,.55); z-index: 500; display: none; align-items: center; justify-content: center; padding: 24px; }
+#itb .exp-overlay.open { display: flex; }
+#itb .exp-modal { background: var(--card); border-radius: var(--r); box-shadow: var(--sl); width: 100%; max-width: 760px; max-height: 88vh; display: flex; flex-direction: column; overflow: hidden; animation: itb-rise .22s ease; }
+@keyframes itb-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+#itb .exp-head { background: var(--ink); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; border-bottom: 1px solid var(--gold); }
+#itb .exp-head h2 { font-family: 'Cormorant Garamond', serif; font-weight: 500; color: #fff; font-size: 1.25rem; }
+#itb .exp-head-r { display: flex; gap: 10px; align-items: center; }
+#itb .btn-close-exp { background: none; border: 1px solid rgba(255,255,255,.25); color: #fff; border-radius: var(--rs); width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: .8rem; transition: border-color .2s, color .2s; }
+#itb .btn-close-exp:hover { border-color: var(--gold); color: var(--gold-lt); }
+#itb .exp-body { overflow-y: auto; flex: 1; }
+#itb .cwrap { background: #12100e; overflow: hidden; }
+#itb .ctop { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; background: #1d1916; border-bottom: 1px solid #2e2823; }
+#itb .clang { font-size: .62rem; color: #8a7f70; letter-spacing: .2em; text-transform: uppercase; }
+#itb .btn-copy { background: none; border: 1px solid var(--gold); color: var(--gold-lt); border-radius: var(--rs); padding: 7px 16px; font-size: .66rem; font-family: 'Jost', sans-serif; letter-spacing: .16em; text-transform: uppercase; cursor: pointer; transition: background .2s, color .2s; }
+#itb .btn-copy:hover { background: var(--gold); color: var(--ink); }
+#itb .btn-copy.ok { background: var(--gold); color: var(--ink); }
+#itb .carea { color: #d9d0c4; font-family: 'SFMono-Regular', Menlo, Consolas, monospace; font-size: .71rem; line-height: 1.7; padding: 18px 20px; overflow-x: auto; white-space: pre; max-height: 58vh; overflow-y: auto; }
+#itb .carea::-webkit-scrollbar { width: 6px; height: 6px; }
+#itb .carea::-webkit-scrollbar-thumb { background: #3a332c; }
+
+/* TOAST */
+#itb .toast { position: fixed; bottom: 24px; right: 24px; background: var(--ink); color: #fff; padding: 12px 20px; border-left: 2px solid var(--gold); font-size: .76rem; letter-spacing: .06em; font-family: 'Jost', sans-serif; box-shadow: var(--sl); transform: translateY(60px); opacity: 0; transition: transform .3s, opacity .3s; z-index: 999; }
+#itb .toast.on { transform: translateY(0); opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  #itb *, #itb *::before, #itb *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+@media (max-width: 900px) {
+  #itb { height: auto; overflow: auto; }
+  #itb .shell { flex-direction: column-reverse; overflow: auto; }
+  #itb .sb-right { width: 100%; border-left: none; border-bottom: 1px solid var(--line); }
+  #itb .ps-grid { grid-template-columns: 1fr; gap: 0; }
+  #itb .pframe { padding: 28px 20px 32px; }
+  #itb .center-body { padding: 20px 14px 32px; }
+  #itb .topbar { padding: 0 12px 0 14px; }
+  #itb .brand .mark { font-size: .8rem; letter-spacing: .24em; }
+  #itb .brand .sub { display: none; }
+}
+</style>
+</head>
+<body>
+<div id="itb">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="mark">ITB.</span>
+      <span class="sep"></span>
+      <span class="sub">FAQ Builder</span>
+    </div>
+    <button class="btn-gold" onclick="ITB.openExport()">Exportar HTML</button>
+  </header>
+
+  <div class="shell">
+
+    <!-- PREVIEW -->
+    <main class="center">
+      <div class="center-top">
+        <span class="eyebrow">Pré-visualização</span>
+        <span class="eyebrow" id="itb-count"></span>
+      </div>
+      <div class="center-body">
+        <div class="pframe">
+          <div id="itb-preview"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- EDITOR -->
+    <aside class="sb-right">
+      <div class="ed-head"><span class="eyebrow">Editor</span></div>
+      <div class="ed-body" id="itb-ed-body"></div>
+    </aside>
+
+  </div>
+
+  <!-- MODAL -->
+  <div class="exp-overlay" id="itb-expoverlay" onclick="ITB.closeExportOnBg(event)">
+    <div class="exp-modal">
+      <div class="exp-head">
+        <h2>HTML gerado</h2>
+        <div class="exp-head-r">
+          <button class="btn-copy" id="itb-cpybtn" onclick="ITB.copyCode()">Copiar</button>
+          <button class="btn-close-exp" onclick="ITB.closeExport()">✕</button>
+        </div>
+      </div>
+      <div class="exp-body">
+        <div class="cwrap">
+          <div class="ctop">
+            <span class="clang">HTML</span>
+            <span class="clang">Cole no descritivo do produto</span>
+          </div>
+          <div class="carea" id="itb-carea"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="itb-toast"></div>
+</div>
+
+<script>
+const ITB = (() => {
+  const ICO = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="currentColor"/></svg>';
+
+  function uid() { return 'itb' + Date.now() + Math.floor(Math.random() * 9999); }
+
+  // ---- Estado: uma única seção FAQ, já criada ----
+  const state = {
+    title: 'Perguntas frequentes',
+    faqs: []
+  };
+
+  // ---- Editor ----
+  function renderEditor() {
+    const body = document.getElementById('itb-ed-body');
+    body.innerHTML = `
+      <div class="ep">
+        <div class="eh"><span class="lbl">Título da seção</span><span class="bar"></span></div>
+        <div class="fr">
+          <input type="text" class="inp" id="itb-title" value="${xe(state.title)}" placeholder="Perguntas frequentes">
+        </div>
+      </div>
+      <div class="ep">
+        <div class="eh"><span class="lbl">Perguntas</span><span class="bar"></span></div>
+        <div class="rl" id="itb-faqlist"></div>
+        <button class="btn-add-rep" onclick="ITB.addFaq()">Adicionar pergunta</button>
+      </div>`;
+
+    document.getElementById('itb-title').addEventListener('input', function() {
+      state.title = this.value;
+      renderPreview();
+    });
+    renderFaqList();
+  }
+
+  function renderFaqList() {
+    const list = document.getElementById('itb-faqlist');
+    if (!list) return;
+    list.innerHTML = '';
+    state.faqs.forEach((f, i) => {
+      const item = document.createElement('div');
+      item.className = 'ri';
+      item.innerHTML = `
+        <div class="rh">
+          <span class="rnum">${i + 1}</span>
+          <span class="rlbl">Pergunta</span>
+          <div style="display:flex;gap:4px">
+            <button class="rmove" title="Subir" onclick="ITB.moveFaq('${f.id}',-1)" ${i === 0 ? 'disabled' : ''}>▲</button>
+            <button class="rmove" title="Descer" onclick="ITB.moveFaq('${f.id}',1)" ${i === state.faqs.length - 1 ? 'disabled' : ''}>▼</button>
+          </div>
+          <button class="rdel" title="Remover" onclick="ITB.remFaq('${f.id}')">✕</button>
+        </div>
+        <div class="rb">
+          <div>
+            <label class="lb">Pergunta</label>
+            <input type="text" class="inp" id="itb-q-${f.id}" value="${xe(f.q)}" placeholder="Ex.: Qual o prazo de envio?">
+          </div>
+          <div>
+            <label class="lb">Resposta</label>
+            ${rteHTML('itb-a-' + f.id, 'Escreva a resposta...')}
+          </div>
+        </div>`;
+      list.appendChild(item);
+
+      const qEl = item.querySelector('#itb-q-' + f.id);
+      qEl.addEventListener('input', function() {
+        const faq = state.faqs.find(x => x.id === f.id);
+        if (faq) { faq.q = this.value; renderPreview(); }
+      });
+      const aEl = item.querySelector('#itb-a-' + f.id);
+      initRTE(aEl, f.a, html => {
+        const faq = state.faqs.find(x => x.id === f.id);
+        if (faq) { faq.a = html; renderPreview(); }
+      });
+    });
+  }
+
+  function addFaq() {
+    state.faqs.push({ id: uid(), q: '', a: '' });
+    renderFaqList(); renderPreview();
+  }
+  function remFaq(id) {
+    state.faqs = state.faqs.filter(f => f.id !== id);
+    renderFaqList(); renderPreview();
+  }
+  function moveFaq(id, d) {
+    const i = state.faqs.findIndex(f => f.id === id);
+    const ni = i + d;
+    if (i < 0 || ni < 0 || ni >= state.faqs.length) return;
+    [state.faqs[i], state.faqs[ni]] = [state.faqs[ni], state.faqs[i]];
+    renderFaqList(); renderPreview();
+  }
+
+  // ---- Rich text ----
+  function rteHTML(id, placeholder) {
+    return `
+      <div class="rte-wrap">
+        <div class="rte-toolbar">
+          <button class="rte-btn" data-cmd="bold" title="Negrito"><b>B</b></button>
+          <button class="rte-btn" data-cmd="italic" title="Itálico"><i>I</i></button>
+          <div class="rte-sep"></div>
+          <button class="rte-btn" data-cmd="insertUnorderedList" title="Lista">lista</button>
+          <button class="rte-btn" data-cmd="insertOrderedList" title="Lista numerada">1. lista</button>
+          <div class="rte-sep"></div>
+          <button class="rte-btn" data-cmd="removeFormat" title="Limpar formatação">limpar</button>
+        </div>
+        <div class="rte-area" id="${id}" contenteditable="true" data-placeholder="${placeholder}"></div>
+      </div>`;
+  }
+
+  function initRTE(el, initialHtml, onChange) {
+    if (!el) return;
+    el.innerHTML = initialHtml || '';
+    const toolbar = el.closest('.rte-wrap').querySelector('.rte-toolbar');
+    toolbar.querySelectorAll('.rte-btn').forEach(btn => {
+      btn.addEventListener('mousedown', e => {
+        e.preventDefault();
+        document.execCommand(btn.dataset.cmd, false, null);
+        el.focus(); onChange(el.innerHTML);
+      });
+    });
+    el.addEventListener('input', () => onChange(el.innerHTML));
+  }
+
+  // ---- Preview ----
+  function renderPreview() {
+    const pc = document.getElementById('itb-preview');
+    const faqs = state.faqs;
+    const n = faqs.length;
+    document.getElementById('itb-count').textContent =
+      n === 0 ? 'Nenhuma pergunta' : (n === 1 ? '1 pergunta' : n + ' perguntas');
+
+    if (!n) {
+      pc.innerHTML = `
+        <div class="ps-head">
+          <div class="ps-kicker">ITB. Acessórios</div>
+          <div class="ps-title">${xe(state.title || 'Perguntas frequentes')}</div>
+          <div class="ps-rule"></div>
+        </div>
+        <p style="text-align:center;font-size:.84rem;line-height:1.8;color:var(--muted)">Adicione a primeira pergunta no editor ao lado<br>para montar o bloco.</p>`;
+      return;
+    }
+
+    const half = Math.ceil(n / 2);
+    const cols = [faqs.slice(0, half), faqs.slice(half)];
+    const items = list => list.map(f => `
+      <details class="ps-fi">
+        <summary class="ps-ft"><span>${xe(f.q || 'Pergunta')}</span><span class="ps-fic" aria-hidden="true">${ICO}</span></summary>
+        <div class="ps-fb-inner">${f.a || '<em style="color:var(--muted)">Sem resposta.</em>'}</div>
+      </details>`).join('');
+
+    pc.innerHTML = `
+      <div class="ps-head">
+        <div class="ps-kicker">ITB. Acessórios</div>
+        <div class="ps-title">${xe(state.title || 'Perguntas frequentes')}</div>
+        <div class="ps-rule"></div>
+      </div>
+      <div class="ps-grid">
+        <div class="ps-col">${items(cols[0])}</div>
+        <div class="ps-col">${items(cols[1])}</div>
+      </div>`;
+  }
+
+  // ---- Export ----
+  const CSS = `<style>
+#itb-faq{--ink:#17130f;--graphite:#4a423a;--muted:#968b7d;--line:#e5dbcc;--gold:#b08a4e;color:var(--graphite);font-family:'Jost',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+#itb-faq *{box-sizing:border-box;margin:0;padding:0}
+#itb-faq .itbf{padding:56px 0}
+#itb-faq .itbf-head{text-align:center;margin-bottom:34px}
+#itb-faq .itbf-kicker{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+#itb-faq .itbf-title{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:2.1rem;line-height:1.15;color:var(--ink)}
+#itb-faq .itbf-rule{width:34px;height:1px;background:var(--gold);margin:16px auto 0}
+#itb-faq .itbf-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-items:start}
+#itb-faq .itbf-col{display:flex;flex-direction:column}
+#itb-faq .itbf-i{border-bottom:1px solid var(--line)}
+#itb-faq .itbf-t{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 2px;cursor:pointer;font-size:.92rem;font-weight:400;color:var(--ink);list-style:none;width:100%;text-align:left;transition:color .2s}
+#itb-faq .itbf-t::marker,#itb-faq .itbf-t::-webkit-details-marker{display:none}
+#itb-faq .itbf-t:hover{color:var(--gold)}
+#itb-faq .itbf-ic{flex-shrink:0;color:var(--gold);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;align-items:center}
+#itb-faq .itbf-ic svg{width:13px;height:13px;display:block}
+#itb-faq details.itbf-i[open] .itbf-ic{transform:rotate(45deg)}
+#itb-faq details.itbf-i[open] .itbf-t{color:var(--gold)}
+#itb-faq .itbf-b{padding:0 2px 20px;font-size:.88rem;line-height:1.85;color:var(--graphite)}
+#itb-faq .itbf-b ul{padding-left:1.1em;margin:.4em 0;list-style:none}
+#itb-faq .itbf-b ul li::before{content:'\\2014';color:var(--gold);margin-right:.55em}
+#itb-faq .itbf-b ol{padding-left:1.4em;margin:.4em 0}
+#itb-faq .itbf-b li{margin-bottom:.3em}
+#itb-faq .itbf-b strong{font-weight:600;color:var(--ink)}
+#itb-faq .itbf-b em{font-style:italic}
+@media(max-width:768px){
+  #itb-faq .itbf{padding:34px 0}
+  #itb-faq .itbf-title{font-size:1.6rem}
+  #itb-faq .itbf-grid{grid-template-columns:1fr;gap:0}
+}
+@media(prefers-reduced-motion:reduce){#itb-faq *{transition-duration:.01ms!important}}
+</style>`;
+
+  function genHTML() {
+    const faqs = state.faqs;
+    if (!faqs.length) return '<!-- Nenhuma pergunta adicionada. -->';
+    const half = Math.ceil(faqs.length / 2);
+    const cols = [faqs.slice(0, half), faqs.slice(half)];
+    const items = list => list.map(f => `        <details class="itbf-i" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="itbf-t"><span itemprop="name">${encA(xe(f.q || ''))}</span><span class="itbf-ic" aria-hidden="true">${ICO}</span></summary>
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div class="itbf-b" itemprop="text">${encA(f.a || '')}</div>
+          </div>
+        </details>`).join('\n');
+
+    const title = encA(xe(state.title || 'Perguntas frequentes'));
+    return `${CSS}
+
+<div id="itb-faq">
+  <section class="itbf" aria-label="${title}" itemscope itemtype="https://schema.org/FAQPage">
+    <div class="itbf-head">
+      <p class="itbf-kicker">ITB. Acess&#243;rios</p>
+      <h2 class="itbf-title">${title}</h2>
+      <div class="itbf-rule"></div>
+    </div>
+    <div class="itbf-grid">
+      <div class="itbf-col">
+${items(cols[0])}
+      </div>
+      <div class="itbf-col">
+${items(cols[1])}
+      </div>
+    </div>
+  </section>
+</div>`;
+  }
+
+  // ---- Modal ----
+  function openExport() {
+    document.getElementById('itb-carea').textContent = genHTML();
+    document.getElementById('itb-expoverlay').classList.add('open');
+  }
+  function closeExport() { document.getElementById('itb-expoverlay').classList.remove('open'); }
+  function closeExportOnBg(e) { if (e.target === document.getElementById('itb-expoverlay')) closeExport(); }
+  function copyCode() {
+    navigator.clipboard.writeText(document.getElementById('itb-carea').textContent).then(() => {
+      const b = document.getElementById('itb-cpybtn');
+      b.textContent = 'Copiado'; b.classList.add('ok');
+      toast('Código copiado');
+      setTimeout(() => { b.textContent = 'Copiar'; b.classList.remove('ok'); }, 2200);
+    });
+  }
+
+  // ---- Utils ----
+  function xe(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function encA(s) {
+    return String(s || '').split(/(<[^>]*>)/).map((part, i) =>
+      i % 2 === 0 ? part.replace(/[^\x00-\x7E]/g, c => '&#' + c.charCodeAt(0) + ';') : part
+    ).join('');
+  }
+  function toast(msg) {
+    const t = document.getElementById('itb-toast');
+    t.textContent = msg; t.classList.add('on');
+    setTimeout(() => t.classList.remove('on'), 2400);
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeExport(); });
+
+  // ---- Boot ----
+  renderEditor();
+  renderPreview();
+
+  return { addFaq, remFaq, moveFaq, openExport, closeExport, closeExportOnBg, copyCode };
+})();
+</script>
+</body>
+</html>
