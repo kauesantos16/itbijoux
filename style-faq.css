@@ -1,0 +1,32 @@
+<style>
+#itb-faq{--ink:#17130f;--graphite:#4a423a;--muted:#968b7d;--line:#e5dbcc;--gold:#b08a4e;color:var(--graphite);font-family:'Jost',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+#itb-faq *{box-sizing:border-box;margin:0;padding:0}
+#itb-faq .itbf{padding:56px 0}
+#itb-faq .itbf-head{text-align:center;margin-bottom:34px}
+#itb-faq .itbf-kicker{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+#itb-faq .itbf-title{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:2.1rem;line-height:1.15;color:var(--ink)}
+#itb-faq .itbf-rule{width:34px;height:1px;background:var(--gold);margin:16px auto 0}
+#itb-faq .itbf-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-items:start}
+#itb-faq .itbf-col{display:flex;flex-direction:column}
+#itb-faq .itbf-i{border-bottom:1px solid var(--line)}
+#itb-faq .itbf-t{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 2px;cursor:pointer;font-size:.92rem;font-weight:400;color:var(--ink);list-style:none;width:100%;text-align:left;transition:color .2s}
+#itb-faq .itbf-t::marker,#itb-faq .itbf-t::-webkit-details-marker{display:none}
+#itb-faq .itbf-t:hover{color:var(--gold)}
+#itb-faq .itbf-ic{flex-shrink:0;color:var(--gold);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;align-items:center}
+#itb-faq .itbf-ic svg{width:13px;height:13px;display:block}
+#itb-faq details.itbf-i[open] .itbf-ic{transform:rotate(45deg)}
+#itb-faq details.itbf-i[open] .itbf-t{color:var(--gold)}
+#itb-faq .itbf-b{padding:0 2px 20px;font-size:.88rem;line-height:1.85;color:var(--graphite)}
+#itb-faq .itbf-b ul{padding-left:1.1em;margin:.4em 0;list-style:none}
+#itb-faq .itbf-b ul li::before{content:'\2014';color:var(--gold);margin-right:.55em}
+#itb-faq .itbf-b ol{padding-left:1.4em;margin:.4em 0}
+#itb-faq .itbf-b li{margin-bottom:.3em}
+#itb-faq .itbf-b strong{font-weight:600;color:var(--ink)}
+#itb-faq .itbf-b em{font-style:italic}
+@media(max-width:768px){
+  #itb-faq .itbf{padding:34px 0}
+  #itb-faq .itbf-title{font-size:1.6rem}
+  #itb-faq .itbf-grid{grid-template-columns:1fr;gap:0}
+}
+@media(prefers-reduced-motion:reduce){#itb-faq *{transition-duration:.01ms!important}}
+</style>
