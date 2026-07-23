@@ -114,9 +114,18 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
 /* LISTA DE PERGUNTAS */
 #itb .rl { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
 #itb .ri { border: 1px solid var(--line); border-radius: var(--rs); overflow: hidden; background: var(--card); }
-#itb .rh { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: var(--sand); border-bottom: 1px solid var(--line); }
-#itb .rnum { font-family: 'Cormorant Garamond', serif; font-size: .95rem; font-weight: 600; color: var(--gold); min-width: 18px; }
-#itb .rlbl { flex: 1; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+#itb .rh { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: var(--sand); border-bottom: 1px solid var(--line); cursor: pointer; user-select: none; }
+#itb .ri.closed .rh { border-bottom-color: transparent; }
+#itb .ri.closed .rb { display: none; }
+#itb .rchev { flex-shrink: 0; color: var(--muted); display: flex; align-items: center; transition: transform .25s ease, color .2s; }
+#itb .rchev svg { width: 10px; height: 10px; display: block; }
+#itb .rh:hover .rchev { color: var(--gold); }
+#itb .ri.closed .rchev { transform: rotate(-90deg); }
+#itb .rnum { font-family: 'Cormorant Garamond', serif; font-size: .95rem; font-weight: 600; color: var(--gold); min-width: 14px; }
+#itb .rlbl { flex: 1; min-width: 0; font-size: .78rem; color: var(--ink2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#itb .rlbl.empty { color: var(--muted); font-style: italic; }
+#itb .btn-mini { background: none; border: none; cursor: pointer; font-family: 'Jost', sans-serif; font-size: .58rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); padding: 2px 0; white-space: nowrap; transition: color .2s; }
+#itb .btn-mini:hover { color: var(--gold); }
 #itb .rmove { background: none; border: 1px solid var(--line); border-radius: var(--rs); width: 22px; height: 22px; font-size: .6rem; cursor: pointer; color: var(--graphite); display: flex; align-items: center; justify-content: center; transition: border-color .15s, color .15s; }
 #itb .rmove:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
 #itb .rmove:disabled { opacity: .28; cursor: default; }
@@ -217,7 +226,7 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
         <div class="cwrap">
           <div class="ctop">
             <span class="clang">HTML</span>
-            <span class="clang">Cole no descritivo do produto</span>
+            <span class="clang">Requer o CSS do tema</span>
           </div>
           <div class="carea" id="itb-carea"></div>
         </div>
@@ -231,6 +240,7 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
 <script>
 const ITB = (() => {
   const ICO = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="currentColor"/></svg>';
+  const CHEV = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   function uid() { return 'itb' + Date.now() + Math.floor(Math.random() * 9999); }
 
@@ -251,7 +261,11 @@ const ITB = (() => {
         </div>
       </div>
       <div class="ep">
-        <div class="eh"><span class="lbl">Perguntas</span><span class="bar"></span></div>
+        <div class="eh">
+          <span class="lbl">Perguntas</span>
+          <span class="bar"></span>
+          <button class="btn-mini" id="itb-toggleall" onclick="ITB.toggleAll()">Recolher todas</button>
+        </div>
         <div class="rl" id="itb-faqlist"></div>
         <button class="btn-add-rep" onclick="ITB.addFaq()">Adicionar pergunta</button>
       </div>`;
@@ -269,16 +283,17 @@ const ITB = (() => {
     list.innerHTML = '';
     state.faqs.forEach((f, i) => {
       const item = document.createElement('div');
-      item.className = 'ri';
+      item.className = 'ri' + (f.open === false ? ' closed' : '');
       item.innerHTML = `
-        <div class="rh">
+        <div class="rh" data-toggle="1">
+          <span class="rchev">${CHEV}</span>
           <span class="rnum">${i + 1}</span>
-          <span class="rlbl">Pergunta</span>
+          <span class="rlbl${f.q ? '' : ' empty'}">${xe(f.q) || 'Sem pergunta'}</span>
           <div style="display:flex;gap:4px">
-            <button class="rmove" title="Subir" onclick="ITB.moveFaq('${f.id}',-1)" ${i === 0 ? 'disabled' : ''}>▲</button>
-            <button class="rmove" title="Descer" onclick="ITB.moveFaq('${f.id}',1)" ${i === state.faqs.length - 1 ? 'disabled' : ''}>▼</button>
+            <button class="rmove" title="Subir" onclick="event.stopPropagation();ITB.moveFaq('${f.id}',-1)" ${i === 0 ? 'disabled' : ''}>▲</button>
+            <button class="rmove" title="Descer" onclick="event.stopPropagation();ITB.moveFaq('${f.id}',1)" ${i === state.faqs.length - 1 ? 'disabled' : ''}>▼</button>
           </div>
-          <button class="rdel" title="Remover" onclick="ITB.remFaq('${f.id}')">✕</button>
+          <button class="rdel" title="Remover" onclick="event.stopPropagation();ITB.remFaq('${f.id}')">✕</button>
         </div>
         <div class="rb">
           <div>
@@ -292,10 +307,23 @@ const ITB = (() => {
         </div>`;
       list.appendChild(item);
 
+      item.querySelector('.rh').addEventListener('click', () => {
+        const faq = state.faqs.find(x => x.id === f.id);
+        faq.open = faq.open === false;
+        item.classList.toggle('closed', faq.open === false);
+        syncToggleAll();
+      });
+
       const qEl = item.querySelector('#itb-q-' + f.id);
       qEl.addEventListener('input', function() {
         const faq = state.faqs.find(x => x.id === f.id);
-        if (faq) { faq.q = this.value; renderPreview(); }
+        if (faq) {
+          faq.q = this.value;
+          const lbl = item.querySelector('.rlbl');
+          lbl.textContent = this.value || 'Sem pergunta';
+          lbl.classList.toggle('empty', !this.value);
+          renderPreview();
+        }
       });
       const aEl = item.querySelector('#itb-a-' + f.id);
       initRTE(aEl, f.a, html => {
@@ -303,11 +331,30 @@ const ITB = (() => {
         if (faq) { faq.a = html; renderPreview(); }
       });
     });
+    syncToggleAll();
+  }
+
+  function syncToggleAll() {
+    const btn = document.getElementById('itb-toggleall');
+    if (!btn) return;
+    btn.style.visibility = state.faqs.length ? 'visible' : 'hidden';
+    const allClosed = state.faqs.length > 0 && state.faqs.every(f => f.open === false);
+    btn.textContent = allClosed ? 'Expandir todas' : 'Recolher todas';
+  }
+
+  function toggleAll() {
+    if (!state.faqs.length) return;
+    const allClosed = state.faqs.every(f => f.open === false);
+    state.faqs.forEach(f => { f.open = allClosed; });
+    renderFaqList();
   }
 
   function addFaq() {
-    state.faqs.push({ id: uid(), q: '', a: '' });
+    const nf = { id: uid(), q: '', a: '', open: true };
+    state.faqs.push(nf);
     renderFaqList(); renderPreview();
+    const el = document.getElementById('itb-q-' + nf.id);
+    if (el) { el.focus(); el.scrollIntoView({ block: 'nearest' }); }
   }
   function remFaq(id) {
     state.faqs = state.faqs.filter(f => f.id !== id);
@@ -392,39 +439,6 @@ const ITB = (() => {
   }
 
   // ---- Export ----
-  const CSS = `<style>
-#itb-faq{--ink:#17130f;--graphite:#4a423a;--muted:#968b7d;--line:#e5dbcc;--gold:#b08a4e;color:var(--graphite);font-family:'Jost',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-#itb-faq *{box-sizing:border-box;margin:0;padding:0}
-#itb-faq .itbf{padding:56px 0}
-#itb-faq .itbf-head{text-align:center;margin-bottom:34px}
-#itb-faq .itbf-kicker{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-#itb-faq .itbf-title{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:2.1rem;line-height:1.15;color:var(--ink)}
-#itb-faq .itbf-rule{width:34px;height:1px;background:var(--gold);margin:16px auto 0}
-#itb-faq .itbf-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-items:start}
-#itb-faq .itbf-col{display:flex;flex-direction:column}
-#itb-faq .itbf-i{border-bottom:1px solid var(--line)}
-#itb-faq .itbf-t{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 2px;cursor:pointer;font-size:.92rem;font-weight:400;color:var(--ink);list-style:none;width:100%;text-align:left;transition:color .2s}
-#itb-faq .itbf-t::marker,#itb-faq .itbf-t::-webkit-details-marker{display:none}
-#itb-faq .itbf-t:hover{color:var(--gold)}
-#itb-faq .itbf-ic{flex-shrink:0;color:var(--gold);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;align-items:center}
-#itb-faq .itbf-ic svg{width:13px;height:13px;display:block}
-#itb-faq details.itbf-i[open] .itbf-ic{transform:rotate(45deg)}
-#itb-faq details.itbf-i[open] .itbf-t{color:var(--gold)}
-#itb-faq .itbf-b{padding:0 2px 20px;font-size:.88rem;line-height:1.85;color:var(--graphite)}
-#itb-faq .itbf-b ul{padding-left:1.1em;margin:.4em 0;list-style:none}
-#itb-faq .itbf-b ul li::before{content:'\\2014';color:var(--gold);margin-right:.55em}
-#itb-faq .itbf-b ol{padding-left:1.4em;margin:.4em 0}
-#itb-faq .itbf-b li{margin-bottom:.3em}
-#itb-faq .itbf-b strong{font-weight:600;color:var(--ink)}
-#itb-faq .itbf-b em{font-style:italic}
-@media(max-width:768px){
-  #itb-faq .itbf{padding:34px 0}
-  #itb-faq .itbf-title{font-size:1.6rem}
-  #itb-faq .itbf-grid{grid-template-columns:1fr;gap:0}
-}
-@media(prefers-reduced-motion:reduce){#itb-faq *{transition-duration:.01ms!important}}
-</style>`;
-
   function genHTML() {
     const faqs = state.faqs;
     if (!faqs.length) return '<!-- Nenhuma pergunta adicionada. -->';
@@ -438,9 +452,7 @@ const ITB = (() => {
         </details>`).join('\n');
 
     const title = encA(xe(state.title || 'Perguntas frequentes'));
-    return `${CSS}
-
-<div id="itb-faq">
+    return `<div id="itb-faq">
   <section class="itbf" aria-label="${title}" itemscope itemtype="https://schema.org/FAQPage">
     <div class="itbf-head">
       <p class="itbf-kicker">ITB. Acess&#243;rios</p>
@@ -496,7 +508,7 @@ ${items(cols[1])}
   renderEditor();
   renderPreview();
 
-  return { addFaq, remFaq, moveFaq, openExport, closeExport, closeExportOnBg, copyCode };
+  return { addFaq, remFaq, moveFaq, toggleAll, openExport, closeExport, closeExportOnBg, copyCode };
 })();
 </script>
 </body>
