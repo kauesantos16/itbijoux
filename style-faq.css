@@ -58,16 +58,23 @@
   outline-offset: 2px;
 }
 /* Ícone (+ que gira para x) ------------------------------------------------ */
-#itb-faq .itbf-ic {
+/* Desenhado em CSS de propósito: o editor da Nuvemshop remove <svg> do HTML
+   colado no descritivo, então o ícone não pode depender de markup. */
+#itb-faq .itbf-t::after {
+  content: '';
   flex-shrink: 0;
+  width: 13px;
+  height: 13px;
   color: var(--gold);
-  display: flex;
-  align-items: center;
+  background:
+    linear-gradient(currentColor, currentColor) center / 100% 1.4px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 1.4px 100% no-repeat;
   transition: transform .35s cubic-bezier(.4, 0, .2, 1);
 }
-#itb-faq .itbf-ic svg { width: 13px; height: 13px; display: block; }
-#itb-faq details.itbf-i[open] .itbf-ic { transform: rotate(45deg); }
-#itb-faq details.itbf-i[open] .itbf-t  { color: var(--gold); }
+#itb-faq details.itbf-i[open] .itbf-t::after { transform: rotate(45deg); }
+#itb-faq details.itbf-i[open] .itbf-t { color: var(--gold); }
+/* Caso algum HTML antigo com o <span> do ícone sobreviva, não duplica */
+#itb-faq .itbf-ic { display: none; }
 /* Resposta ----------------------------------------------------------------- */
 #itb-faq .itbf-b {
   padding: 0 2px 20px;
@@ -84,12 +91,16 @@
 #itb-faq .itbf-b a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
 /* Seção de texto (rich text) ----------------------------------------------- */
 #itb-faq .itbf-rich-body {
+  width: 100%;
   font-size: .88rem;
   line-height: 1.85;
   color: var(--graphite);
-  max-width: 760px;
-  margin: 0 auto;
 }
+/* O editor da Nuvemshop injeta font-size inline ao colar texto.
+   Isso faz o bloco herdar o tamanho definido acima. Remova se precisar
+   controlar tamanho de fonte por trecho. */
+#itb-faq .itbf-rich-body [style*="font-size"] { font-size: inherit !important; }
+#itb-faq .itbf-rich-body img { max-width: 100%; height: auto; }
 #itb-faq .itbf-rich-body p { margin: 0 0 1em; }
 #itb-faq .itbf-rich-body p:last-child { margin-bottom: 0; }
 #itb-faq .itbf-rich-body h3 {
