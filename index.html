@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FAQ Builder — ITB Acessórios</title>
+<title>Blocos ITB — Builder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -12,18 +12,18 @@
 
 #itb {
   /* ---- Tokens de marca ITB ---- */
-  --ink:      #17130f;   /* preto quente da marca */
+  --ink:      #17130f;
   --ink2:     #322a23;
   --graphite: #4a423a;
   --muted:    #968b7d;
 
-  --cream:    #fbf8f4;   /* fundo geral */
-  --sand:     #f2ebe1;   /* superfícies secundárias */
+  --cream:    #fbf8f4;
+  --sand:     #f2ebe1;
   --card:     #ffffff;
   --line:     #e5dbcc;
   --line2:    #f0e8dc;
 
-  --gold:     #b08a4e;   /* ouro 18K */
+  --gold:     #b08a4e;
   --gold-lt:  #d6b77c;
   --gold-bg:  #f7f0e2;
 
@@ -49,14 +49,40 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
 /* SHELL */
 #itb .shell { display: flex; flex: 1; overflow: hidden; }
 
+/* SIDEBAR ESQUERDA — SEÇÕES */
+#itb .sb-left { width: 268px; background: var(--card); border-right: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
+#itb .sl-head { height: 40px; border-bottom: 1px solid var(--line2); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; flex-shrink: 0; }
+#itb .sl-body { flex: 1; overflow-y: auto; padding: 14px 14px 8px; }
+#itb .sl-foot { border-top: 1px solid var(--line2); padding: 12px 14px; display: flex; gap: 8px; flex-shrink: 0; }
+#itb .btn-add-sec { flex: 1; background: transparent; border: 1px solid var(--line); border-radius: var(--rs); padding: 9px 6px; font-family: 'Jost', sans-serif; font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink2); cursor: pointer; transition: border-color .2s, color .2s, background .2s; }
+#itb .btn-add-sec:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-bg); }
+
+#itb .sec-l { display: flex; flex-direction: column; gap: 8px; }
+#itb .sec-i { border: 1px solid var(--line); border-left: 2px solid transparent; border-radius: var(--rs); background: var(--cream); padding: 9px 9px 9px 10px; cursor: pointer; display: flex; align-items: flex-start; gap: 9px; transition: border-color .18s, background .18s; }
+#itb .sec-i:hover { border-color: var(--gold-lt); }
+#itb .sec-i.active { background: #fff; border-color: var(--line); border-left-color: var(--gold); box-shadow: var(--ss); }
+#itb .sec-n { font-family: 'Cormorant Garamond', serif; font-size: .95rem; font-weight: 600; color: var(--gold); min-width: 12px; line-height: 1.5; }
+#itb .sec-main { flex: 1; min-width: 0; }
+#itb .sec-t { display: inline-block; font-size: .53rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: var(--rs); padding: 1px 5px; margin-bottom: 4px; }
+#itb .sec-i.active .sec-t { color: var(--gold); border-color: var(--gold-lt); }
+#itb .sec-lbl { display: block; font-size: .78rem; color: var(--ink2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#itb .sec-lbl.empty { color: var(--muted); font-style: italic; }
+#itb .sec-meta { display: block; font-size: .6rem; color: var(--muted); letter-spacing: .06em; margin-top: 2px; }
+#itb .sec-acts { display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
+#itb .sl-empty { font-size: .74rem; line-height: 1.7; color: var(--muted); font-style: italic; padding: 6px 2px; }
+
 /* CENTER */
-#itb .center { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--cream); }
+#itb .center { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; background: var(--cream); }
 #itb .center-top { height: 40px; border-bottom: 1px solid var(--line2); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; background: var(--cream); }
 #itb .eyebrow { font-size: .64rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
 #itb .center-body { flex: 1; overflow-y: auto; padding: 40px 24px 56px; }
 #itb .pframe { background: var(--card); border: 1px solid var(--line); box-shadow: var(--sm); max-width: 900px; margin: 0 auto; padding: 48px 52px 52px; }
 
 /* PREVIEW */
+#itb .ps-sec { position: relative; padding: 8px; margin: 0 -8px 36px; border: 1px dashed transparent; border-radius: var(--rs); cursor: pointer; transition: border-color .2s, background .2s; }
+#itb .ps-sec:last-child { margin-bottom: 0; }
+#itb .ps-sec:hover { border-color: var(--line); }
+#itb .ps-sec.active { border-color: var(--gold-lt); background: rgba(247,240,226,.35); }
 #itb .ps-head { text-align: center; margin-bottom: 34px; }
 #itb .ps-title { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 2.1rem; line-height: 1.15; color: var(--ink); }
 #itb .ps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; align-items: start; }
@@ -76,10 +102,24 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
 #itb .ps-fb-inner li { margin-bottom: .3em; }
 #itb .ps-fb-inner strong { font-weight: 600; color: var(--ink); }
 #itb .ps-fb-inner em { font-style: italic; }
+/* preview — bloco de texto */
+#itb .ps-rich { font-size: .86rem; line-height: 1.85; color: var(--graphite); max-width: 760px; margin: 0 auto; }
+#itb .ps-rich p { margin: 0 0 1em; }
+#itb .ps-rich p:last-child { margin-bottom: 0; }
+#itb .ps-rich h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 500; color: var(--ink); margin: 1.5em 0 .5em; }
+#itb .ps-rich h3:first-child { margin-top: 0; }
+#itb .ps-rich ul { padding-left: 1.1em; margin: .6em 0; list-style: none; }
+#itb .ps-rich ul li::before { content: '—'; color: var(--gold); margin-right: .55em; }
+#itb .ps-rich ol { padding-left: 1.4em; margin: .6em 0; }
+#itb .ps-rich li { margin-bottom: .3em; }
+#itb .ps-rich strong { font-weight: 600; color: var(--ink); }
+#itb .ps-rich em { font-style: italic; }
+#itb .ps-rich a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
+#itb .ps-ph { text-align: center; font-size: .84rem; line-height: 1.8; color: var(--muted); font-style: italic; }
 
 /* RIGHT EDITOR */
 #itb .sb-right { width: 360px; background: var(--card); border-left: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
-#itb .ed-head { height: 40px; border-bottom: 1px solid var(--line2); display: flex; align-items: center; padding: 0 18px; flex-shrink: 0; }
+#itb .ed-head { height: 40px; border-bottom: 1px solid var(--line2); display: flex; align-items: center; justify-content: space-between; padding: 0 18px; flex-shrink: 0; }
 #itb .ed-body { flex: 1; overflow-y: auto; padding: 20px 18px 28px; }
 
 /* PAINÉIS */
@@ -94,6 +134,8 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
 #itb input[type=text].inp { width: 100%; background: var(--cream); border: 1px solid var(--line); border-radius: var(--rs); padding: 9px 11px; font-family: 'Jost', sans-serif; font-size: .85rem; color: var(--ink); outline: none; transition: border-color .2s, background .2s; }
 #itb input[type=text].inp:focus { border-color: var(--gold); background: #fff; }
 #itb input[type=text].inp::placeholder { color: #bdb3a6; }
+#itb .hint { font-size: .64rem; line-height: 1.6; color: var(--muted); margin-top: 6px; }
+#itb .ed-empty { font-size: .78rem; line-height: 1.8; color: var(--muted); font-style: italic; }
 
 /* RICH TEXT */
 #itb .rte-wrap { border: 1px solid var(--line); border-radius: var(--rs); overflow: hidden; background: #fff; }
@@ -102,11 +144,14 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
 #itb .rte-btn:hover { background: var(--gold-bg); color: var(--ink); }
 #itb .rte-sep { width: 1px; background: var(--line); margin: 4px 3px; }
 #itb .rte-area { min-height: 84px; padding: 11px 12px; font-family: 'Jost', sans-serif; font-size: .85rem; line-height: 1.8; color: var(--ink2); outline: none; background: var(--cream); overflow-y: auto; }
+#itb .rte-area.tall { min-height: 260px; }
 #itb .rte-area:focus { background: #fff; }
 #itb .rte-area p { margin: 0 0 .4em; }
+#itb .rte-area h3 { font-size: 1rem; font-weight: 600; color: var(--ink); margin: .6em 0 .3em; }
 #itb .rte-area ul { padding-left: 1.3em; margin: .3em 0; }
 #itb .rte-area ol { padding-left: 1.5em; margin: .3em 0; }
 #itb .rte-area li { margin-bottom: .15em; }
+#itb .rte-area a { color: var(--gold); }
 #itb .rte-area:empty::before { content: attr(data-placeholder); color: #bdb3a6; pointer-events: none; }
 
 /* LISTA DE PERGUNTAS */
@@ -162,11 +207,29 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
   #itb *, #itb *::before, #itb *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 
+/* Telas médias: as três colunas continuam, as laterais encolhem ------------- */
+@media (max-width: 1240px) {
+  #itb .sb-left { width: 218px; }
+  #itb .sb-right { width: 312px; }
+  #itb .center-body { padding: 28px 16px 40px; }
+  #itb .pframe { padding: 34px 30px 38px; }
+  #itb .ps-grid { gap: 0 26px; }
+}
+@media (max-width: 1040px) {
+  #itb .sb-left { width: 190px; }
+  #itb .sb-right { width: 280px; }
+  #itb .ps-grid { grid-template-columns: 1fr; gap: 0; }
+  #itb .sec-acts { flex-direction: column; gap: 2px; }
+}
+
+/* Abaixo disso, empilha: seções, editor, prévia ----------------------------- */
 @media (max-width: 900px) {
   #itb { height: auto; overflow: auto; }
-  #itb .shell { flex-direction: column-reverse; overflow: auto; }
-  #itb .sb-right { width: 100%; border-left: none; border-bottom: 1px solid var(--line); }
-  #itb .ps-grid { grid-template-columns: 1fr; gap: 0; }
+  #itb .shell { flex-direction: column; overflow: auto; }
+  #itb .sb-left { order: 1; width: 100%; border-right: none; border-bottom: 1px solid var(--line); }
+  #itb .sb-right { order: 2; width: 100%; border-left: none; border-bottom: 1px solid var(--line); }
+  #itb .center { order: 3; }
+  #itb .sec-acts { flex-direction: row; gap: 3px; }
   #itb .pframe { padding: 28px 20px 32px; }
   #itb .center-body { padding: 20px 14px 32px; }
   #itb .topbar { padding: 0 12px 0 14px; }
@@ -182,12 +245,25 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
     <div class="brand">
       <span class="mark">ITB.</span>
       <span class="sep"></span>
-      <span class="sub">FAQ Builder</span>
+      <span class="sub">Builder de blocos</span>
     </div>
     <button class="btn-gold" onclick="ITB.openExport()">Exportar HTML</button>
   </header>
 
   <div class="shell">
+
+    <!-- SEÇÕES -->
+    <aside class="sb-left">
+      <div class="sl-head">
+        <span class="eyebrow">Seções</span>
+        <span class="eyebrow" id="itb-seccount"></span>
+      </div>
+      <div class="sl-body"><div class="sec-l" id="itb-seclist"></div></div>
+      <div class="sl-foot">
+        <button class="btn-add-sec" onclick="ITB.addSection('faq')">+ FAQ</button>
+        <button class="btn-add-sec" onclick="ITB.addSection('text')">+ Texto</button>
+      </div>
+    </aside>
 
     <!-- PREVIEW -->
     <main class="center">
@@ -204,7 +280,10 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
 
     <!-- EDITOR -->
     <aside class="sb-right">
-      <div class="ed-head"><span class="eyebrow">Editor</span></div>
+      <div class="ed-head">
+        <span class="eyebrow">Editor</span>
+        <span class="eyebrow" id="itb-edtype"></span>
+      </div>
       <div class="ed-body" id="itb-ed-body"></div>
     </aside>
 
@@ -242,44 +321,171 @@ const ITB = (() => {
 
   function uid() { return 'itb' + Date.now() + Math.floor(Math.random() * 9999); }
 
-  // ---- Estado: uma única seção FAQ, já criada ----
-  const state = {
-    title: 'Perguntas frequentes',
-    faqs: []
-  };
+  // ---- Estado ----
+  const state = { sections: [], active: null };
+
+  function newSection(type) {
+    return type === 'faq'
+      ? { id: uid(), type: 'faq', title: 'Perguntas frequentes', faqs: [] }
+      : { id: uid(), type: 'text', html: '' };
+  }
+  function getActive() { return state.sections.find(s => s.id === state.active) || null; }
+  function typeLabel(t) { return t === 'faq' ? 'FAQ' : 'Texto'; }
+
+  // ---- Coluna de seções ----
+  function renderSectionList() {
+    const list = document.getElementById('itb-seclist');
+    const n = state.sections.length;
+    document.getElementById('itb-seccount').textContent = n ? n : '';
+    list.innerHTML = '';
+
+    if (!n) {
+      list.innerHTML = '<p class="sl-empty">Nenhuma seção. Use os botões abaixo para adicionar um FAQ ou um bloco de texto.</p>';
+      return;
+    }
+
+    state.sections.forEach((s, i) => {
+      const el = document.createElement('div');
+      el.className = 'sec-i' + (s.id === state.active ? ' active' : '');
+      el.innerHTML = `
+        <span class="sec-n">${i + 1}</span>
+        <div class="sec-main">
+          <span class="sec-t">${typeLabel(s.type)}</span>
+          <span class="sec-lbl${labelEmpty(s) ? ' empty' : ''}">${xe(labelText(s))}</span>
+          <span class="sec-meta">${metaText(s)}</span>
+        </div>
+        <div class="sec-acts">
+          <button class="rmove" title="Subir" onclick="event.stopPropagation();ITB.moveSection('${s.id}',-1)" ${i === 0 ? 'disabled' : ''}>&#9650;</button>
+          <button class="rmove" title="Descer" onclick="event.stopPropagation();ITB.moveSection('${s.id}',1)" ${i === n - 1 ? 'disabled' : ''}>&#9660;</button>
+          <button class="rdel" title="Remover seção" onclick="event.stopPropagation();ITB.remSection('${s.id}')">✕</button>
+        </div>`;
+      el.addEventListener('click', () => selectSection(s.id));
+      list.appendChild(el);
+    });
+  }
+
+  function labelText(s) {
+    if (s.type === 'faq') return s.title || 'Sem título';
+    const t = stripHTML(s.html);
+    return t ? (t.length > 44 ? t.slice(0, 44) + '…' : t) : 'Bloco de texto';
+  }
+  function labelEmpty(s) {
+    return s.type === 'faq' ? !s.title : !stripHTML(s.html);
+  }
+
+  function metaText(s) {
+    if (s.type === 'faq') return s.faqs.length === 1 ? '1 pergunta' : s.faqs.length + ' perguntas';
+    const len = stripHTML(s.html).length;
+    return len ? len + ' caracteres' : 'vazio';
+  }
+
+  function addSection(type) {
+    const s = newSection(type);
+    state.sections.push(s);
+    state.active = s.id;
+    renderAll();
+    const t = document.getElementById('itb-title');
+    if (t) t.focus();
+  }
+
+  function remSection(id) {
+    const i = state.sections.findIndex(s => s.id === id);
+    if (i < 0) return;
+    const s = state.sections[i];
+    const hasContent = s.type === 'faq' ? s.faqs.length > 0 : stripHTML(s.html).length > 0;
+    if (hasContent && !confirm('Remover esta seção e todo o conteúdo dela?')) return;
+    state.sections.splice(i, 1);
+    if (state.active === id) {
+      const next = state.sections[i] || state.sections[i - 1];
+      state.active = next ? next.id : null;
+    }
+    renderAll();
+  }
+
+  function moveSection(id, d) {
+    const i = state.sections.findIndex(s => s.id === id);
+    const ni = i + d;
+    if (i < 0 || ni < 0 || ni >= state.sections.length) return;
+    [state.sections[i], state.sections[ni]] = [state.sections[ni], state.sections[i]];
+    renderAll();
+  }
+
+  function selectSection(id) {
+    if (state.active === id) return;
+    state.active = id;
+    renderAll();
+  }
 
   // ---- Editor ----
   function renderEditor() {
     const body = document.getElementById('itb-ed-body');
-    body.innerHTML = `
-      <div class="ep">
-        <div class="eh"><span class="lbl">Título da seção</span><span class="bar"></span></div>
-        <div class="fr">
-          <input type="text" class="inp" id="itb-title" value="${xe(state.title)}" placeholder="Perguntas frequentes">
-        </div>
-      </div>
-      <div class="ep">
-        <div class="eh">
-          <span class="lbl">Perguntas</span>
-          <span class="bar"></span>
-          <button class="btn-mini" id="itb-toggleall" onclick="ITB.toggleAll()">Recolher todas</button>
-        </div>
-        <div class="rl" id="itb-faqlist"></div>
-        <button class="btn-add-rep" onclick="ITB.addFaq()">Adicionar pergunta</button>
-      </div>`;
+    const sec = getActive();
+    document.getElementById('itb-edtype').textContent = sec ? typeLabel(sec.type) : '';
 
-    document.getElementById('itb-title').addEventListener('input', function() {
-      state.title = this.value;
-      renderPreview();
-    });
-    renderFaqList();
+    if (!sec) {
+      body.innerHTML = '<p class="ed-empty">Selecione ou adicione uma seção na coluna da esquerda.</p>';
+      return;
+    }
+
+    if (sec.type === 'faq') {
+      body.innerHTML = `
+        <div class="ep">
+          <div class="eh"><span class="lbl">Título da seção</span><span class="bar"></span></div>
+          <div class="fr">
+            <input type="text" class="inp" id="itb-title" value="${xe(sec.title)}" placeholder="Perguntas frequentes">
+            <p class="hint">Deixe vazio para exportar a seção sem título.</p>
+          </div>
+        </div>
+        <div class="ep">
+          <div class="eh">
+            <span class="lbl">Perguntas</span>
+            <span class="bar"></span>
+            <button class="btn-mini" id="itb-toggleall" onclick="ITB.toggleAll()">Recolher todas</button>
+          </div>
+          <div class="rl" id="itb-faqlist"></div>
+          <button class="btn-add-rep" onclick="ITB.addFaq()">Adicionar pergunta</button>
+        </div>`;
+      bindTitle(sec);
+      renderFaqList();
+    } else {
+      body.innerHTML = `
+        <div class="ep">
+          <div class="eh"><span class="lbl">Conteúdo</span><span class="bar"></span></div>
+          ${rteHTML('itb-rich-' + sec.id, 'Escreva o conteúdo da seção...', true)}
+          <p class="hint">Use H3 para subtítulos dentro do bloco.</p>
+        </div>`;
+      initRTE(document.getElementById('itb-rich-' + sec.id), sec.html, html => {
+        sec.html = html;
+        renderPreview();
+        updateSectionInfo(sec);
+      });
+    }
   }
 
+  function bindTitle(sec) {
+    document.getElementById('itb-title').addEventListener('input', function() {
+      sec.title = this.value;
+      renderPreview();
+      updateSectionInfo(sec);
+    });
+  }
+
+  function updateSectionInfo(sec) {
+    const item = document.querySelectorAll('#itb-seclist .sec-i')[state.sections.indexOf(sec)];
+    if (!item) return;
+    const lbl = item.querySelector('.sec-lbl');
+    lbl.textContent = labelText(sec);
+    lbl.classList.toggle('empty', labelEmpty(sec));
+    item.querySelector('.sec-meta').textContent = metaText(sec);
+  }
+
+  // ---- Perguntas (da seção FAQ ativa) ----
   function renderFaqList() {
+    const sec = getActive();
     const list = document.getElementById('itb-faqlist');
-    if (!list) return;
+    if (!list || !sec || sec.type !== 'faq') return;
     list.innerHTML = '';
-    state.faqs.forEach((f, i) => {
+    sec.faqs.forEach((f, i) => {
       const item = document.createElement('div');
       item.className = 'ri' + (f.open === false ? ' closed' : '');
       item.innerHTML = `
@@ -288,8 +494,8 @@ const ITB = (() => {
           <span class="rnum">${i + 1}</span>
           <span class="rlbl${f.q ? '' : ' empty'}">${xe(f.q) || 'Sem pergunta'}</span>
           <div style="display:flex;gap:4px">
-            <button class="rmove" title="Subir" onclick="event.stopPropagation();ITB.moveFaq('${f.id}',-1)" ${i === 0 ? 'disabled' : ''}>▲</button>
-            <button class="rmove" title="Descer" onclick="event.stopPropagation();ITB.moveFaq('${f.id}',1)" ${i === state.faqs.length - 1 ? 'disabled' : ''}>▼</button>
+            <button class="rmove" title="Subir" onclick="event.stopPropagation();ITB.moveFaq('${f.id}',-1)" ${i === 0 ? 'disabled' : ''}>&#9650;</button>
+            <button class="rmove" title="Descer" onclick="event.stopPropagation();ITB.moveFaq('${f.id}',1)" ${i === sec.faqs.length - 1 ? 'disabled' : ''}>&#9660;</button>
           </div>
           <button class="rdel" title="Remover" onclick="event.stopPropagation();ITB.remFaq('${f.id}')">✕</button>
         </div>
@@ -306,80 +512,91 @@ const ITB = (() => {
       list.appendChild(item);
 
       item.querySelector('.rh').addEventListener('click', () => {
-        const faq = state.faqs.find(x => x.id === f.id);
-        faq.open = faq.open === false;
-        item.classList.toggle('closed', faq.open === false);
+        f.open = f.open === false;
+        item.classList.toggle('closed', f.open === false);
         syncToggleAll();
       });
 
-      const qEl = item.querySelector('#itb-q-' + f.id);
-      qEl.addEventListener('input', function() {
-        const faq = state.faqs.find(x => x.id === f.id);
-        if (faq) {
-          faq.q = this.value;
-          const lbl = item.querySelector('.rlbl');
-          lbl.textContent = this.value || 'Sem pergunta';
-          lbl.classList.toggle('empty', !this.value);
-          renderPreview();
-        }
+      item.querySelector('#itb-q-' + f.id).addEventListener('input', function() {
+        f.q = this.value;
+        const lbl = item.querySelector('.rlbl');
+        lbl.textContent = this.value || 'Sem pergunta';
+        lbl.classList.toggle('empty', !this.value);
+        renderPreview();
       });
-      const aEl = item.querySelector('#itb-a-' + f.id);
-      initRTE(aEl, f.a, html => {
-        const faq = state.faqs.find(x => x.id === f.id);
-        if (faq) { faq.a = html; renderPreview(); }
+
+      initRTE(item.querySelector('#itb-a-' + f.id), f.a, html => {
+        f.a = html;
+        renderPreview();
       });
     });
     syncToggleAll();
   }
 
   function syncToggleAll() {
+    const sec = getActive();
     const btn = document.getElementById('itb-toggleall');
-    if (!btn) return;
-    btn.style.visibility = state.faqs.length ? 'visible' : 'hidden';
-    const allClosed = state.faqs.length > 0 && state.faqs.every(f => f.open === false);
+    if (!btn || !sec) return;
+    btn.style.visibility = sec.faqs.length ? 'visible' : 'hidden';
+    const allClosed = sec.faqs.length > 0 && sec.faqs.every(f => f.open === false);
     btn.textContent = allClosed ? 'Expandir todas' : 'Recolher todas';
   }
 
   function toggleAll() {
-    if (!state.faqs.length) return;
-    const allClosed = state.faqs.every(f => f.open === false);
-    state.faqs.forEach(f => { f.open = allClosed; });
+    const sec = getActive();
+    if (!sec || !sec.faqs.length) return;
+    const allClosed = sec.faqs.every(f => f.open === false);
+    sec.faqs.forEach(f => { f.open = allClosed; });
     renderFaqList();
   }
 
   function addFaq() {
+    const sec = getActive();
+    if (!sec || sec.type !== 'faq') return;
     const nf = { id: uid(), q: '', a: '', open: true };
-    state.faqs.push(nf);
-    renderFaqList(); renderPreview();
+    sec.faqs.push(nf);
+    renderFaqList(); renderPreview(); updateSectionInfo(sec);
     const el = document.getElementById('itb-q-' + nf.id);
     if (el) { el.focus(); el.scrollIntoView({ block: 'nearest' }); }
   }
   function remFaq(id) {
-    state.faqs = state.faqs.filter(f => f.id !== id);
-    renderFaqList(); renderPreview();
+    const sec = getActive();
+    if (!sec) return;
+    sec.faqs = sec.faqs.filter(f => f.id !== id);
+    renderFaqList(); renderPreview(); updateSectionInfo(sec);
   }
   function moveFaq(id, d) {
-    const i = state.faqs.findIndex(f => f.id === id);
+    const sec = getActive();
+    if (!sec) return;
+    const i = sec.faqs.findIndex(f => f.id === id);
     const ni = i + d;
-    if (i < 0 || ni < 0 || ni >= state.faqs.length) return;
-    [state.faqs[i], state.faqs[ni]] = [state.faqs[ni], state.faqs[i]];
+    if (i < 0 || ni < 0 || ni >= sec.faqs.length) return;
+    [sec.faqs[i], sec.faqs[ni]] = [sec.faqs[ni], sec.faqs[i]];
     renderFaqList(); renderPreview();
   }
 
   // ---- Rich text ----
-  function rteHTML(id, placeholder) {
+  function rteHTML(id, placeholder, rich) {
+    const blocks = rich ? `
+          <button class="rte-btn" data-cmd="formatBlock" data-val="&lt;h3&gt;" title="Subtítulo">H3</button>
+          <button class="rte-btn" data-cmd="formatBlock" data-val="&lt;p&gt;" title="Parágrafo">P</button>
+          <div class="rte-sep"></div>` : '';
+    const links = rich ? `
+          <div class="rte-sep"></div>
+          <button class="rte-btn" data-cmd="createLink" title="Inserir link">link</button>
+          <button class="rte-btn" data-cmd="unlink" title="Remover link">–link</button>` : '';
     return `
       <div class="rte-wrap">
         <div class="rte-toolbar">
           <button class="rte-btn" data-cmd="bold" title="Negrito"><b>B</b></button>
           <button class="rte-btn" data-cmd="italic" title="Itálico"><i>I</i></button>
-          <div class="rte-sep"></div>
+          <div class="rte-sep"></div>${blocks}
           <button class="rte-btn" data-cmd="insertUnorderedList" title="Lista">lista</button>
-          <button class="rte-btn" data-cmd="insertOrderedList" title="Lista numerada">1. lista</button>
+          <button class="rte-btn" data-cmd="insertOrderedList" title="Lista numerada">1. lista</button>${links}
           <div class="rte-sep"></div>
           <button class="rte-btn" data-cmd="removeFormat" title="Limpar formatação">limpar</button>
         </div>
-        <div class="rte-area" id="${id}" contenteditable="true" data-placeholder="${placeholder}"></div>
+        <div class="rte-area${rich ? ' tall' : ''}" id="${id}" contenteditable="true" data-placeholder="${placeholder}"></div>
       </div>`;
   }
 
@@ -390,8 +607,21 @@ const ITB = (() => {
     toolbar.querySelectorAll('.rte-btn').forEach(btn => {
       btn.addEventListener('mousedown', e => {
         e.preventDefault();
-        document.execCommand(btn.dataset.cmd, false, null);
-        el.focus(); onChange(el.innerHTML);
+        const cmd = btn.dataset.cmd;
+        if (cmd === 'createLink') {
+          const sel = window.getSelection();
+          const range = sel.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
+          const url = prompt('URL do link:', 'https://');
+          el.focus();
+          if (range) { sel.removeAllRanges(); sel.addRange(range); }
+          if (url) document.execCommand('createLink', false, url);
+        } else if (cmd === 'formatBlock') {
+          document.execCommand('formatBlock', false, btn.dataset.val);
+        } else {
+          document.execCommand(cmd, false, null);
+        }
+        el.focus();
+        onChange(el.innerHTML);
       });
     });
     el.addEventListener('input', () => onChange(el.innerHTML));
@@ -400,44 +630,76 @@ const ITB = (() => {
   // ---- Preview ----
   function renderPreview() {
     const pc = document.getElementById('itb-preview');
-    const faqs = state.faqs;
-    const n = faqs.length;
-    document.getElementById('itb-count').textContent =
-      n === 0 ? 'Nenhuma pergunta' : (n === 1 ? '1 pergunta' : n + ' perguntas');
+    const secs = state.sections;
+    const totalQ = secs.reduce((a, s) => a + (s.type === 'faq' ? s.faqs.length : 0), 0);
+    document.getElementById('itb-count').textContent = !secs.length
+      ? 'Vazio'
+      : secs.length + (secs.length === 1 ? ' seção' : ' seções') + ' · ' + totalQ + (totalQ === 1 ? ' pergunta' : ' perguntas');
 
-    if (!n) {
-      pc.innerHTML = `
-        <div class="ps-head">
-          <div class="ps-title">${xe(state.title || 'Perguntas frequentes')}</div>
-        </div>
-        <p style="text-align:center;font-size:.84rem;line-height:1.8;color:var(--muted)">Adicione a primeira pergunta no editor ao lado<br>para montar o bloco.</p>`;
+    if (!secs.length) {
+      pc.innerHTML = '<p class="ps-ph">Adicione uma seção na coluna da esquerda<br>para montar o bloco.</p>';
       return;
     }
 
-    const half = Math.ceil(n / 2);
-    const cols = [faqs.slice(0, half), faqs.slice(half)];
+    pc.innerHTML = secs.map(s => `
+      <div class="ps-sec${s.id === state.active ? ' active' : ''}" data-id="${s.id}">
+        ${s.type === 'faq' && s.title ? `<div class="ps-head"><div class="ps-title">${xe(s.title)}</div></div>` : ''}
+        ${s.type === 'faq' ? faqPreview(s) : richPreview(s)}
+      </div>`).join('');
+
+    pc.querySelectorAll('.ps-sec').forEach(el => {
+      el.addEventListener('click', e => {
+        if (e.target.closest('summary')) return;
+        selectSection(el.dataset.id);
+      });
+    });
+  }
+
+  function faqPreview(s) {
+    if (!s.faqs.length) return '<p class="ps-ph">Nenhuma pergunta nesta seção.</p>';
+    const half = Math.ceil(s.faqs.length / 2);
+    const cols = [s.faqs.slice(0, half), s.faqs.slice(half)];
     const items = list => list.map(f => `
       <details class="ps-fi">
         <summary class="ps-ft"><span>${xe(f.q || 'Pergunta')}</span><span class="ps-fic" aria-hidden="true">${ICO}</span></summary>
         <div class="ps-fb-inner">${f.a || '<em style="color:var(--muted)">Sem resposta.</em>'}</div>
       </details>`).join('');
+    return `<div class="ps-grid"><div class="ps-col">${items(cols[0])}</div><div class="ps-col">${items(cols[1])}</div></div>`;
+  }
 
-    pc.innerHTML = `
-      <div class="ps-head">
-        <div class="ps-title">${xe(state.title || 'Perguntas frequentes')}</div>
-      </div>
-      <div class="ps-grid">
-        <div class="ps-col">${items(cols[0])}</div>
-        <div class="ps-col">${items(cols[1])}</div>
-      </div>`;
+  function richPreview(s) {
+    if (!stripHTML(s.html).length) return '<p class="ps-ph">Seção de texto vazia.</p>';
+    return `<div class="ps-rich">${s.html}</div>`;
   }
 
   // ---- Export ----
   function genHTML() {
-    const faqs = state.faqs;
-    if (!faqs.length) return '<!-- Nenhuma pergunta adicionada. -->';
-    const half = Math.ceil(faqs.length / 2);
-    const cols = [faqs.slice(0, half), faqs.slice(half)];
+    const usable = state.sections.filter(s =>
+      s.type === 'faq' ? s.faqs.length > 0 : stripHTML(s.html).length > 0
+    );
+    if (!usable.length) return '<!-- Nenhuma seção com conteúdo. -->';
+
+    const hasFaq = usable.some(s => s.type === 'faq');
+    const wrap = hasFaq ? ' itemscope itemtype="https://schema.org/FAQPage"' : '';
+    const body = usable.map(s => s.type === 'faq' ? faqSectionHTML(s) : richSectionHTML(s)).join('\n');
+
+    return `<div id="itb-faq"${wrap}>
+${body}
+</div>`;
+  }
+
+  function headHTML(title) {
+    if (!title) return '';
+    return `    <div class="itbf-head">
+      <h2 class="itbf-title">${title}</h2>
+    </div>
+`;
+  }
+
+  function faqSectionHTML(s) {
+    const title = encA(xe(s.title || ''));
+    const half = Math.ceil(s.faqs.length / 2);
+    const cols = [s.faqs.slice(0, half), s.faqs.slice(half)];
     const items = list => list.map(f => `        <details class="itbf-i" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
           <summary class="itbf-t"><span itemprop="name">${encA(xe(f.q || ''))}</span><span class="itbf-ic" aria-hidden="true">${ICO}</span></summary>
           <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
@@ -445,13 +707,8 @@ const ITB = (() => {
           </div>
         </details>`).join('\n');
 
-    const title = encA(xe(state.title || 'Perguntas frequentes'));
-    return `<div id="itb-faq">
-  <section class="itbf" aria-label="${title}" itemscope itemtype="https://schema.org/FAQPage">
-    <div class="itbf-head">
-      <h2 class="itbf-title">${title}</h2>
-    </div>
-    <div class="itbf-grid">
+    return `  <section class="itbf"${title ? ` aria-label="${title}"` : ''}>
+${headHTML(title)}    <div class="itbf-grid">
       <div class="itbf-col">
 ${items(cols[0])}
       </div>
@@ -459,8 +716,13 @@ ${items(cols[0])}
 ${items(cols[1])}
       </div>
     </div>
-  </section>
-</div>`;
+  </section>`;
+  }
+
+  function richSectionHTML(s) {
+    return `  <section class="itbf itbf-rich">
+    <div class="itbf-rich-body">${encA(s.html)}</div>
+  </section>`;
   }
 
   // ---- Modal ----
@@ -488,19 +750,30 @@ ${items(cols[1])}
       i % 2 === 0 ? part.replace(/[^\x00-\x7E]/g, c => '&#' + c.charCodeAt(0) + ';') : part
     ).join('');
   }
+  function stripHTML(s) {
+    const d = document.createElement('div');
+    d.innerHTML = s || '';
+    return (d.textContent || '').trim();
+  }
   function toast(msg) {
     const t = document.getElementById('itb-toast');
     t.textContent = msg; t.classList.add('on');
     setTimeout(() => t.classList.remove('on'), 2400);
   }
 
+  function renderAll() { renderSectionList(); renderEditor(); renderPreview(); }
+
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeExport(); });
 
   // ---- Boot ----
-  renderEditor();
-  renderPreview();
+  (function boot() {
+    const s = newSection('faq');
+    state.sections.push(s);
+    state.active = s.id;
+    renderAll();
+  })();
 
-  return { addFaq, remFaq, moveFaq, toggleAll, openExport, closeExport, closeExportOnBg, copyCode };
+  return { addSection, remSection, moveSection, addFaq, remFaq, moveFaq, toggleAll, openExport, closeExport, closeExportOnBg, copyCode };
 })();
 </script>
 </body>
