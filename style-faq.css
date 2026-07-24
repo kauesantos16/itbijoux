@@ -16,6 +16,7 @@
 #itb-faq * { box-sizing: border-box; margin: 0; padding: 0; }
 /* Seção -------------------------------------------------------------------- */
 #itb-faq .itbf { padding: 56px 0; }
+#itb-faq .itbf + .itbf { padding-top: 0; }
 /* Cabeçalho ---------------------------------------------------------------- */
 #itb-faq .itbf-head { text-align: center; margin-bottom: 34px; }
 #itb-faq .itbf-title {
@@ -81,11 +82,37 @@
 #itb-faq .itbf-b strong { font-weight: 600; color: var(--ink); }
 #itb-faq .itbf-b em { font-style: italic; }
 #itb-faq .itbf-b a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
+/* Seção de texto (rich text) ----------------------------------------------- */
+#itb-faq .itbf-rich-body {
+  font-size: .88rem;
+  line-height: 1.85;
+  color: var(--graphite);
+  max-width: 760px;
+  margin: 0 auto;
+}
+#itb-faq .itbf-rich-body p { margin: 0 0 1em; }
+#itb-faq .itbf-rich-body p:last-child { margin-bottom: 0; }
+#itb-faq .itbf-rich-body h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+  margin: 1.6em 0 .5em;
+}
+#itb-faq .itbf-rich-body h3:first-child { margin-top: 0; }
+#itb-faq .itbf-rich-body ul { padding-left: 1.1em; margin: .6em 0; list-style: none; }
+#itb-faq .itbf-rich-body ul li::before { content: '\2014'; color: var(--gold); margin-right: .55em; }
+#itb-faq .itbf-rich-body ol { padding-left: 1.4em; margin: .6em 0; }
+#itb-faq .itbf-rich-body li { margin-bottom: .3em; }
+#itb-faq .itbf-rich-body strong { font-weight: 600; color: var(--ink); }
+#itb-faq .itbf-rich-body em { font-style: italic; }
+#itb-faq .itbf-rich-body a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
 /* Mobile ------------------------------------------------------------------- */
 @media (max-width: 768px) {
   #itb-faq .itbf { padding: 34px 0; }
   #itb-faq .itbf-title { font-size: 1.6rem; }
   #itb-faq .itbf-grid { grid-template-columns: 1fr; gap: 0; }
+  #itb-faq .itbf-rich-body h3 { font-size: 1.1rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   #itb-faq * { transition-duration: .01ms !important; }
