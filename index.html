@@ -91,9 +91,8 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
 #itb .ps-ft { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 17px 2px; cursor: pointer; font-size: .88rem; font-weight: 400; letter-spacing: .01em; color: var(--ink); list-style: none; width: 100%; text-align: left; transition: color .2s; }
 #itb .ps-ft::marker, #itb .ps-ft::-webkit-details-marker { display: none; }
 #itb .ps-ft:hover { color: var(--gold); }
-#itb .ps-fic { flex-shrink: 0; color: var(--gold); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; align-items: center; }
-#itb .ps-fic svg { width: 13px; height: 13px; display: block; }
-#itb details.ps-fi[open] .ps-fic { transform: rotate(45deg); }
+#itb .ps-ft::after { content: ''; flex-shrink: 0; width: 13px; height: 13px; color: var(--gold); background: linear-gradient(currentColor,currentColor) center / 100% 1.4px no-repeat, linear-gradient(currentColor,currentColor) center / 1.4px 100% no-repeat; transition: transform .35s cubic-bezier(.4,0,.2,1); }
+#itb details.ps-fi[open] .ps-ft::after { transform: rotate(45deg); }
 #itb details.ps-fi[open] .ps-ft { color: var(--gold); }
 #itb .ps-fb-inner { padding: 0 2px 20px; font-size: .84rem; line-height: 1.85; color: var(--graphite); }
 #itb .ps-fb-inner ul { padding-left: 1.1em; margin: .4em 0; list-style: none; }
@@ -103,7 +102,8 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
 #itb .ps-fb-inner strong { font-weight: 600; color: var(--ink); }
 #itb .ps-fb-inner em { font-style: italic; }
 /* preview — bloco de texto */
-#itb .ps-rich { font-size: .86rem; line-height: 1.85; color: var(--graphite); max-width: 760px; margin: 0 auto; }
+#itb .ps-rich { width: 100%; font-size: .86rem; line-height: 1.85; color: var(--graphite); }
+#itb .ps-rich [style*="font-size"] { font-size: inherit !important; }
 #itb .ps-rich p { margin: 0 0 1em; }
 #itb .ps-rich p:last-child { margin-bottom: 0; }
 #itb .ps-rich h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 500; color: var(--ink); margin: 1.5em 0 .5em; }
@@ -316,7 +316,6 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
 
 <script>
 const ITB = (() => {
-  const ICO = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z" fill="currentColor"/></svg>';
   const CHEV = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   function uid() { return 'itb' + Date.now() + Math.floor(Math.random() * 9999); }
@@ -661,7 +660,7 @@ const ITB = (() => {
     const cols = [s.faqs.slice(0, half), s.faqs.slice(half)];
     const items = list => list.map(f => `
       <details class="ps-fi">
-        <summary class="ps-ft"><span>${xe(f.q || 'Pergunta')}</span><span class="ps-fic" aria-hidden="true">${ICO}</span></summary>
+        <summary class="ps-ft"><span>${xe(f.q || 'Pergunta')}</span></summary>
         <div class="ps-fb-inner">${f.a || '<em style="color:var(--muted)">Sem resposta.</em>'}</div>
       </details>`).join('');
     return `<div class="ps-grid"><div class="ps-col">${items(cols[0])}</div><div class="ps-col">${items(cols[1])}</div></div>`;
@@ -701,7 +700,7 @@ ${body}
     const half = Math.ceil(s.faqs.length / 2);
     const cols = [s.faqs.slice(0, half), s.faqs.slice(half)];
     const items = list => list.map(f => `        <details class="itbf-i" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <summary class="itbf-t"><span itemprop="name">${encA(xe(f.q || ''))}</span><span class="itbf-ic" aria-hidden="true">${ICO}</span></summary>
+          <summary class="itbf-t"><span itemprop="name">${encA(xe(f.q || ''))}</span></summary>
           <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
             <div class="itbf-b" itemprop="text">${encA(f.a || '')}</div>
           </div>
