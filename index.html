@@ -58,9 +58,7 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
 
 /* PREVIEW */
 #itb .ps-head { text-align: center; margin-bottom: 34px; }
-#itb .ps-kicker { font-size: .62rem; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
 #itb .ps-title { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 2.1rem; line-height: 1.15; color: var(--ink); }
-#itb .ps-rule { width: 34px; height: 1px; background: var(--gold); margin: 16px auto 0; }
 #itb .ps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; align-items: start; }
 #itb .ps-col { display: flex; flex-direction: column; }
 #itb .ps-fi { border-bottom: 1px solid var(--line); }
@@ -410,9 +408,7 @@ const ITB = (() => {
     if (!n) {
       pc.innerHTML = `
         <div class="ps-head">
-          <div class="ps-kicker">ITB. Acessórios</div>
           <div class="ps-title">${xe(state.title || 'Perguntas frequentes')}</div>
-          <div class="ps-rule"></div>
         </div>
         <p style="text-align:center;font-size:.84rem;line-height:1.8;color:var(--muted)">Adicione a primeira pergunta no editor ao lado<br>para montar o bloco.</p>`;
       return;
@@ -428,9 +424,7 @@ const ITB = (() => {
 
     pc.innerHTML = `
       <div class="ps-head">
-        <div class="ps-kicker">ITB. Acessórios</div>
         <div class="ps-title">${xe(state.title || 'Perguntas frequentes')}</div>
-        <div class="ps-rule"></div>
       </div>
       <div class="ps-grid">
         <div class="ps-col">${items(cols[0])}</div>
@@ -455,9 +449,7 @@ const ITB = (() => {
     return `<div id="itb-faq">
   <section class="itbf" aria-label="${title}" itemscope itemtype="https://schema.org/FAQPage">
     <div class="itbf-head">
-      <p class="itbf-kicker">ITB. Acess&#243;rios</p>
       <h2 class="itbf-title">${title}</h2>
-      <div class="itbf-rule"></div>
     </div>
     <div class="itbf-grid">
       <div class="itbf-col">
