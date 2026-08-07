@@ -11,6 +11,7 @@
   --muted: #968b7d;
   --line: #e5dbcc;
   --gold: #b08a4e;
+  --faq-q: #9a9a9a;            /* cinza da pergunta e do ícone — ajuste aqui */
   color: var(--graphite);
 }
 #itb-faq * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,17 +45,15 @@
   cursor: pointer;
   font-size: .92rem;
   font-weight: 400;
-  color: var(--ink);
+  color: var(--faq-q);
   list-style: none;
   width: 100%;
   text-align: left;
-  transition: color .2s;
 }
 #itb-faq .itbf-t::marker,
 #itb-faq .itbf-t::-webkit-details-marker { display: none; }
-#itb-faq .itbf-t:hover { color: var(--gold); }
 #itb-faq .itbf-t:focus-visible {
-  outline: 1px solid var(--gold);
+  outline: 1px solid var(--faq-q);
   outline-offset: 2px;
 }
 /* Ícone (+ que gira para x) ------------------------------------------------ */
@@ -65,14 +64,13 @@
   flex-shrink: 0;
   width: 13px;
   height: 13px;
-  color: var(--gold);
+  color: var(--faq-q);
   background:
     linear-gradient(currentColor, currentColor) center / 100% 1.4px no-repeat,
     linear-gradient(currentColor, currentColor) center / 1.4px 100% no-repeat;
   transition: transform .35s cubic-bezier(.4, 0, .2, 1);
 }
 #itb-faq details.itbf-i[open] .itbf-t::after { transform: rotate(45deg); }
-#itb-faq details.itbf-i[open] .itbf-t { color: var(--gold); }
 /* Caso algum HTML antigo com o <span> do ícone sobreviva, não duplica */
 #itb-faq .itbf-ic { display: none; }
 /* Resposta ----------------------------------------------------------------- */
