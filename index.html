@@ -88,12 +88,10 @@ html, body { height: 100%; margin: 0; padding: 0; font-family: 'Jost', sans-seri
 #itb .ps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; align-items: start; }
 #itb .ps-col { display: flex; flex-direction: column; }
 #itb .ps-fi { border-bottom: 1px solid var(--line); }
-#itb .ps-ft { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 17px 2px; cursor: pointer; font-size: .88rem; font-weight: 400; letter-spacing: .01em; color: var(--ink); list-style: none; width: 100%; text-align: left; transition: color .2s; }
+#itb .ps-ft { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 17px 2px; cursor: pointer; font-size: .88rem; font-weight: 400; letter-spacing: .01em; color: #9a9a9a; list-style: none; width: 100%; text-align: left; }
 #itb .ps-ft::marker, #itb .ps-ft::-webkit-details-marker { display: none; }
-#itb .ps-ft:hover { color: var(--gold); }
-#itb .ps-ft::after { content: ''; flex-shrink: 0; width: 13px; height: 13px; color: var(--gold); background: linear-gradient(currentColor,currentColor) center / 100% 1.4px no-repeat, linear-gradient(currentColor,currentColor) center / 1.4px 100% no-repeat; transition: transform .35s cubic-bezier(.4,0,.2,1); }
+#itb .ps-ft::after { content: ''; flex-shrink: 0; width: 13px; height: 13px; color: #9a9a9a; background: linear-gradient(currentColor,currentColor) center / 100% 1.4px no-repeat, linear-gradient(currentColor,currentColor) center / 1.4px 100% no-repeat; transition: transform .35s cubic-bezier(.4,0,.2,1); }
 #itb details.ps-fi[open] .ps-ft::after { transform: rotate(45deg); }
-#itb details.ps-fi[open] .ps-ft { color: var(--gold); }
 #itb .ps-fb-inner { padding: 0 2px 20px; font-size: .84rem; line-height: 1.85; color: var(--graphite); }
 #itb .ps-fb-inner ul { padding-left: 1.1em; margin: .4em 0; list-style: none; }
 #itb .ps-fb-inner ul li::before { content: '—'; color: var(--gold); margin-right: .55em; }
@@ -325,7 +323,7 @@ const ITB = (() => {
 
   function newSection(type) {
     return type === 'faq'
-      ? { id: uid(), type: 'faq', title: 'Perguntas frequentes', faqs: [] }
+      ? { id: uid(), type: 'faq', faqs: [] }
       : { id: uid(), type: 'text', html: '' };
   }
   function getActive() { return state.sections.find(s => s.id === state.active) || null; }
@@ -364,12 +362,18 @@ const ITB = (() => {
   }
 
   function labelText(s) {
-    if (s.type === 'faq') return s.title || 'Sem título';
+    if (s.type === 'faq') {
+      const first = s.faqs.find(f => f.q && f.q.trim());
+      const q = first ? first.q.trim() : '';
+      return q ? (q.length > 44 ? q.slice(0, 44) + '…' : q) : 'Perguntas frequentes';
+    }
     const t = stripHTML(s.html);
     return t ? (t.length > 44 ? t.slice(0, 44) + '…' : t) : 'Bloco de texto';
   }
   function labelEmpty(s) {
-    return s.type === 'faq' ? !s.title : !stripHTML(s.html);
+    return s.type === 'faq'
+      ? !s.faqs.some(f => f.q && f.q.trim())
+      : !stripHTML(s.html);
   }
 
   function metaText(s) {
@@ -383,8 +387,6 @@ const ITB = (() => {
     state.sections.push(s);
     state.active = s.id;
     renderAll();
-    const t = document.getElementById('itb-title');
-    if (t) t.focus();
   }
 
   function remSection(id) {
@@ -429,13 +431,6 @@ const ITB = (() => {
     if (sec.type === 'faq') {
       body.innerHTML = `
         <div class="ep">
-          <div class="eh"><span class="lbl">Título da seção</span><span class="bar"></span></div>
-          <div class="fr">
-            <input type="text" class="inp" id="itb-title" value="${xe(sec.title)}" placeholder="Perguntas frequentes">
-            <p class="hint">Deixe vazio para exportar a seção sem título.</p>
-          </div>
-        </div>
-        <div class="ep">
           <div class="eh">
             <span class="lbl">Perguntas</span>
             <span class="bar"></span>
@@ -444,7 +439,6 @@ const ITB = (() => {
           <div class="rl" id="itb-faqlist"></div>
           <button class="btn-add-rep" onclick="ITB.addFaq()">Adicionar pergunta</button>
         </div>`;
-      bindTitle(sec);
       renderFaqList();
     } else {
       body.innerHTML = `
@@ -459,14 +453,6 @@ const ITB = (() => {
         updateSectionInfo(sec);
       });
     }
-  }
-
-  function bindTitle(sec) {
-    document.getElementById('itb-title').addEventListener('input', function() {
-      sec.title = this.value;
-      renderPreview();
-      updateSectionInfo(sec);
-    });
   }
 
   function updateSectionInfo(sec) {
@@ -522,6 +508,7 @@ const ITB = (() => {
         lbl.textContent = this.value || 'Sem pergunta';
         lbl.classList.toggle('empty', !this.value);
         renderPreview();
+        updateSectionInfo(sec);
       });
 
       initRTE(item.querySelector('#itb-a-' + f.id), f.a, html => {
@@ -642,7 +629,6 @@ const ITB = (() => {
 
     pc.innerHTML = secs.map(s => `
       <div class="ps-sec${s.id === state.active ? ' active' : ''}" data-id="${s.id}">
-        ${s.type === 'faq' && s.title ? `<div class="ps-head"><div class="ps-title">${xe(s.title)}</div></div>` : ''}
         ${s.type === 'faq' ? faqPreview(s) : richPreview(s)}
       </div>`).join('');
 
@@ -687,16 +673,7 @@ ${body}
 </div>`;
   }
 
-  function headHTML(title) {
-    if (!title) return '';
-    return `    <div class="itbf-head">
-      <h2 class="itbf-title">${title}</h2>
-    </div>
-`;
-  }
-
   function faqSectionHTML(s) {
-    const title = encA(xe(s.title || ''));
     const half = Math.ceil(s.faqs.length / 2);
     const cols = [s.faqs.slice(0, half), s.faqs.slice(half)];
     const items = list => list.map(f => `        <details class="itbf-i" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
@@ -706,8 +683,8 @@ ${body}
           </div>
         </details>`).join('\n');
 
-    return `  <section class="itbf"${title ? ` aria-label="${title}"` : ''}>
-${headHTML(title)}    <div class="itbf-grid">
+    return `  <section class="itbf">
+    <div class="itbf-grid">
       <div class="itbf-col">
 ${items(cols[0])}
       </div>
